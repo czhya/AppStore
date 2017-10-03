@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">APPStore</string>
+    <string name="close">关闭</string>
+    <string name="open">打开</string>
+    <string name="menu_search" />
+
+
+    <string name="icon_sousuo">&#xe632;</string>
+    <string name="icon_wode">&#xe62f;</string>
+</resources>

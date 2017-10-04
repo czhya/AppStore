@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.hya.appstore.bean.FragmentInfo;
+import com.hya.appstore.ui.bean.FragmentInfo;
 import com.hya.appstore.ui.fragment.CategoryFragment;
 import com.hya.appstore.ui.fragment.GameFragment;
 import com.hya.appstore.ui.fragment.RankingFragment;

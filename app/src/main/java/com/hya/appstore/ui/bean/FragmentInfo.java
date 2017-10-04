@@ -1,4 +1,4 @@
-package com.hya.appstore.bean;
+package com.hya.appstore.ui.bean;
 
 /**
  * Created by 洪裕安 on 2017/10/1.

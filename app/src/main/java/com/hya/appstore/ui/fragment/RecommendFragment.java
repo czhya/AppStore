@@ -50,15 +50,11 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     private void initRecyclerView(List<AppInfo> datas) {
         //为RecyclerView设置布局管理器
         recyclerviewRecomment.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         //为RecyclerView设置分割线(这个可以对DividerItemDecoration进行修改，自定义)
         recyclerviewRecomment.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
-
         //动画
         recyclerviewRecomment.setItemAnimator(new DefaultItemAnimator());
-
         mAdapter = new RecommentAdapter(getActivity(),datas);
-
         recyclerviewRecomment.setAdapter(mAdapter);
     }
 

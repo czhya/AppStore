@@ -1,6 +1,5 @@
 package com.hya.appstore.ui.activity;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -8,7 +7,6 @@ import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,14 +14,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hya.appstore.R;
+import com.hya.appstore.di.component.AppComponent;
 import com.hya.appstore.ui.adapter.ViewPagerAdapter;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
 
     @BindView(R.id.layout_drawer)
@@ -43,17 +40,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    public int setLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void init() {
         initDrawerLayout();
         initViewPager();
+    }
+
+    @Override
+    public void setupAcitivtyComponent(AppComponent appComponent) {
+
     }
 
     private void initViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
+        viewpager.setOffscreenPageLimit(adapter.getCount());
         tab.setupWithViewPager(viewpager);
     }
 
@@ -78,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         toolbar.inflateMenu(R.menu.toolbar_menu);
-        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitle("AppStore");
         mdrawerToggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar, R.string.open, R.string.close);
         mdrawerToggle.syncState();
+
         mdrawerLayout.addDrawerListener(mdrawerToggle);
     }
 }

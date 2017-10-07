@@ -11,6 +11,7 @@ import com.hya.appstore.MyApplication;
 import com.hya.appstore.R;
 import com.hya.appstore.di.component.AppComponent;
 import com.hya.appstore.presenter.BasePersenter;
+import com.hya.appstore.ui.BaseView;
 
 import javax.inject.Inject;
 
@@ -21,7 +22,7 @@ import butterknife.Unbinder;
  * Created by 洪裕安 on 2017/10/3.
  */
 
-public abstract class BaseFragment<T extends BasePersenter> extends Fragment {
+public abstract class BaseFragment<T extends BasePersenter> extends Fragment implements BaseView{
 
     private Unbinder unbinder;
     private MyApplication myApplication;
@@ -51,6 +52,21 @@ public abstract class BaseFragment<T extends BasePersenter> extends Fragment {
         if (unbinder!=unbinder.EMPTY){
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     public abstract int setLayout();

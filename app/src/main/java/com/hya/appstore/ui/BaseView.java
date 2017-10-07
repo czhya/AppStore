@@ -7,5 +7,6 @@ package com.hya.appstore.ui;
 public interface BaseView {
 
     void showLoading();
-    void dimissLoading();
+    void dismissLoading();
+    void  showError(String msg);
 }

@@ -1,5 +1,11 @@
 package com.hya.appstore.di.module;
 
+import android.app.Application;
+
+import com.google.gson.Gson;
+import com.hya.appstore.MyApplication;
+import com.hya.appstore.common.http.CommonParamsInterceptor;
+import com.hya.appstore.common.rx.subscriber.RxErrorHandler;
 import com.hya.appstore.data.http.ApiService;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpModule {
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient() {
+    public OkHttpClient provideOkHttpClient(Application application, Gson gson) {
         //设置拦截器
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         // 开发模式记录整个body，否则只记录基本信息如返回200，http协议版本等
@@ -29,6 +35,7 @@ public class HttpModule {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(new CommonParamsInterceptor(gson,application))
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();
@@ -50,5 +57,11 @@ public class HttpModule {
     @Singleton
     public ApiService provideApiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    public RxErrorHandler provideErrorHandler(Application application){
+        return new RxErrorHandler(application);
     }
 }

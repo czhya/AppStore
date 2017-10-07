@@ -12,16 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hya.appstore.R;
-import com.hya.appstore.bean.AppInfo;
+import com.hya.appstore.bean.IndexBean;
 import com.hya.appstore.di.component.AppComponent;
 import com.hya.appstore.di.component.DaggerRecommentComponent;
 import com.hya.appstore.di.module.RecommendModule;
 import com.hya.appstore.presenter.contract.RecommendContract;
 import com.hya.appstore.presenter.contract.RecommendPresenter;
-import com.hya.appstore.ui.adapter.RecommentAdapter;
-import com.hya.appstore.ui.decoration.DividerItemDecoration;
-
-import java.util.List;
+import com.hya.appstore.ui.adapter.IndexMultipleAdapter;
 
 import javax.inject.Inject;
 
@@ -38,31 +35,19 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     @BindView(R.id.recyclerview_recomment)
     RecyclerView recyclerviewRecomment;
     Unbinder unbinder;
-    private RecommentAdapter mAdapter;
-    @Inject
-    ProgressDialog progressDialog;
+    private IndexMultipleAdapter mAdapter;
 
-    @Override
-    public void showResult(List<AppInfo> datas) {
-        initRecyclerView(datas);
-    }
 
-    private void initRecyclerView(List<AppInfo> datas) {
+    private void initRecyclerView() {
         //为RecyclerView设置布局管理器
         recyclerviewRecomment.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //为RecyclerView设置分割线(这个可以对DividerItemDecoration进行修改，自定义)
-        recyclerviewRecomment.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
+
         //动画
         recyclerviewRecomment.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new RecommentAdapter(getActivity(),datas);
-        recyclerviewRecomment.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void showNoData() {
-        Toast.makeText(getActivity(), "暂无数据，请稍后重试", Toast.LENGTH_SHORT).show();
 
     }
+
+
 
     @Override
     public void showError(String msg) {
@@ -70,17 +55,24 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     @Override
-    public void showLoading() {
-        progressDialog.show();
+    public void showResult(IndexBean indexBean) {
+        mAdapter = new IndexMultipleAdapter(getActivity());
+        mAdapter.setData(indexBean);
+
+        recyclerviewRecomment.setAdapter(mAdapter);
+
     }
 
     @Override
-    public void dimissLoading() {
-        if (progressDialog.isShowing()) {
-            progressDialog.dismiss();
-
-        }
+    public void onRequestPermissionSuccess() {
+        mPresenter.requestDatas();
     }
+
+    @Override
+    public void onRequestPermissionError() {
+        Toast.makeText(getActivity(),"你已拒绝授权",Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     public int setLayout() {
@@ -94,6 +86,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     public void init() {
+        initRecyclerView();
         mPresenter.requestDatas();
     }
 

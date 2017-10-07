@@ -7,6 +7,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.eftimoff.androipathview.PathView;
 import com.hya.appstore.R;
+import com.hya.appstore.common.util.ACache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,12 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void jump() {
-        startActivity(new Intent(this,MainActivity.class));
-        this.finish();
+
+        if (ACache.get(this).getAsString(GuideActivity.IS_GUIDE).equals("")){
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+        }else {
+            startActivity(new Intent(this,GuideActivity.class));
+        }
     }
 }

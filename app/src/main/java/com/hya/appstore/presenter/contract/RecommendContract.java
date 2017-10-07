@@ -1,6 +1,7 @@
 package com.hya.appstore.presenter.contract;
 
 import com.hya.appstore.bean.AppInfo;
+import com.hya.appstore.bean.IndexBean;
 import com.hya.appstore.ui.BaseView;
 
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.List;
 
 public interface RecommendContract {
     interface View extends BaseView{
-        void showResult(List<AppInfo> datas);
-        void showNoData();
-        void showError(String msg);
+
+        void showResult(IndexBean indexBean);
+        void onRequestPermissionSuccess();
+        void onRequestPermissionError();
     }
 }

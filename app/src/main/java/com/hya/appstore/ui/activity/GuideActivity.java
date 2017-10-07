@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.hya.appstore.R;
+import com.hya.appstore.common.util.ACache;
 import com.hya.appstore.ui.adapter.GuideFragmentAdapter;
 import com.hya.appstore.ui.fragment.GuideFragment;
 import com.hya.appstore.ui.wight.CircleIndicator;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GuideActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+
+    public static String IS_GUIDE = "GUIDE";
 
 
     @BindView(R.id.viewpager_guide)
@@ -80,6 +83,7 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
 
     @OnClick(R.id.btn_enter)
     public void OnClick(){
+        ACache.get(this).put(IS_GUIDE,"0");
         startActivity(new Intent(GuideActivity.this,MainActivity.class));
         this.finish();
     }

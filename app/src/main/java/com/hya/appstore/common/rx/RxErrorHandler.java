@@ -1,4 +1,4 @@
-package com.hya.appstore.common.rx.subscriber;
+package com.hya.appstore.common.rx;
 
 import android.content.Context;
 import android.widget.Toast;

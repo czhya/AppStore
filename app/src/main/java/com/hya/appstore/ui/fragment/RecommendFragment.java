@@ -1,7 +1,6 @@
 package com.hya.appstore.ui.fragment;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +15,9 @@ import com.hya.appstore.bean.IndexBean;
 import com.hya.appstore.di.component.AppComponent;
 import com.hya.appstore.di.component.DaggerRecommentComponent;
 import com.hya.appstore.di.module.RecommendModule;
-import com.hya.appstore.presenter.contract.RecommendContract;
-import com.hya.appstore.presenter.contract.RecommendPresenter;
+import com.hya.appstore.presenter.contract.AppInfoContract;
+import com.hya.appstore.presenter.RecommendPresenter;
 import com.hya.appstore.ui.adapter.IndexMultipleAdapter;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,23 +27,23 @@ import butterknife.Unbinder;
  * Created by 洪裕安 on 2017/10/1.
  */
 
-public class RecommendFragment extends BaseFragment<RecommendPresenter> implements RecommendContract.View {
+public class RecommendFragment extends BaseFragment<RecommendPresenter> implements AppInfoContract.View {
 
-    @BindView(R.id.recyclerview_recomment)
-    RecyclerView recyclerviewRecomment;
+
     Unbinder unbinder;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     private IndexMultipleAdapter mAdapter;
 
 
     private void initRecyclerView() {
         //为RecyclerView设置布局管理器
-        recyclerviewRecomment.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //动画
-        recyclerviewRecomment.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
-
 
 
     @Override
@@ -59,7 +56,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         mAdapter = new IndexMultipleAdapter(getActivity());
         mAdapter.setData(indexBean);
 
-        recyclerviewRecomment.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
     }
 
@@ -70,13 +67,13 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     public void onRequestPermissionError() {
-        Toast.makeText(getActivity(),"你已拒绝授权",Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "你已拒绝授权", Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     public int setLayout() {
-        return R.layout.fragment_recomment;
+        return R.layout.template_recycler_view;
     }
 
     @Override

@@ -71,6 +71,8 @@ dependencies {
     compile 'com.ms-square:expandableTextView:0.1.4'
 
 
+    compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    compile 'com.hwangjr.rxbus:rxbus:1.0.5'
 
 
 

@@ -2,7 +2,7 @@ package com.hya.appstore.di.component;
 
 import android.app.Application;
 
-import com.hya.appstore.common.rx.subscriber.RxErrorHandler;
+import com.hya.appstore.common.rx.RxErrorHandler;
 import com.hya.appstore.data.http.ApiService;
 import com.hya.appstore.di.module.AppModule;
 import com.hya.appstore.di.module.HttpModule;

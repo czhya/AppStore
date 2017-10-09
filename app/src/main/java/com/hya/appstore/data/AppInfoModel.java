@@ -13,19 +13,27 @@ import rx.Observable;
  * Created by 洪裕安 on 2017/10/3.
  */
 
-public class RecommendModel {
+public class AppInfoModel {
     private ApiService apiService;
 
-    public RecommendModel(ApiService apiService) {
+    public AppInfoModel(ApiService apiService) {
         this.apiService = apiService;
     }
 
-    public Observable<BaseEntry<PageBean<AppInfo>>> getApps(){
-//        apiService.getApps("{'page':0}").enqueue(callback);
+    public Observable<BaseEntry<PageBean<AppInfo>>> getApps() {
         return apiService.getApps("{'page':0}");
     }
 
-    public Observable<BaseEntry<IndexBean>> index(){
+    public Observable<BaseEntry<IndexBean>> index() {
         return apiService.index();
     }
+
+    public Observable<BaseEntry<PageBean<AppInfo>>> topList(int page) {
+        return apiService.topList(page);
+    }
+
+    public Observable<BaseEntry<PageBean<AppInfo>>> games(int page) {
+        return apiService.game(page);
+    }
+
 }

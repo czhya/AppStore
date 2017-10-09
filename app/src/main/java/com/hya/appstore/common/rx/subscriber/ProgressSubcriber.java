@@ -25,7 +25,7 @@ public abstract class ProgressSubcriber<T> extends ErrorHandlerSubscriber<T> {
 
     @Override
     public void onStart() {
-        if ((isShowProgress())){
+        if (isShowProgress()){
             mView.showLoading();
         }
     }
@@ -39,12 +39,5 @@ public abstract class ProgressSubcriber<T> extends ErrorHandlerSubscriber<T> {
     public void onError(Throwable e) {
         BaseException baseException = rxErrorHandler.handlerError(e);
         mView.showError(baseException.getMsg());
-
-        if (isShowProgress()){
-            mView.dismissLoading();
-        }
-
-
-//        mView.dismissLoading();
     }
 }

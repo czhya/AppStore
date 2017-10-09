@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.hya.appstore.ui.bean.FragmentInfo;
 import com.hya.appstore.ui.fragment.CategoryFragment;
 import com.hya.appstore.ui.fragment.GameFragment;
-import com.hya.appstore.ui.fragment.RankingFragment;
+import com.hya.appstore.ui.fragment.TopListFragment;
 import com.hya.appstore.ui.fragment.RecommendFragment;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         fragmentInfos.add(new FragmentInfo("推荐", RecommendFragment.class));
         fragmentInfos.add(new FragmentInfo("游戏", GameFragment.class));
         fragmentInfos.add(new FragmentInfo("分类", CategoryFragment.class));
-        fragmentInfos.add(new FragmentInfo("排行", RankingFragment.class));
+        fragmentInfos.add(new FragmentInfo("排行", TopListFragment.class));
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.hya.appstore.common.Constant;
+import com.hya.appstore.common.util.ACache;
 import com.hya.appstore.common.util.DensityUtil;
 import com.hya.appstore.common.util.DeviceUtils;
 
@@ -59,6 +60,9 @@ public class CommonParamsInterceptor implements Interceptor {
             commonParamsMap.put(Constant.RESOLUTION, DensityUtil.getScreenW(mContext) + "*" + DensityUtil.getScreenH(mContext));
             commonParamsMap.put(Constant.SDK, DeviceUtils.getBuildVersionSDK() + "");
             commonParamsMap.put(Constant.DENSITY_SCALE_FACTOR, mContext.getResources().getDisplayMetrics().density + "");
+
+            String token = ACache.get(mContext).getAsString(Constant.TOKEN);
+            commonParamsMap.put(Constant.TOKEN,token==null?"":token);
 
 
             if (method.equals("GET")) {

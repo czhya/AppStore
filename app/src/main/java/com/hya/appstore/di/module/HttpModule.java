@@ -3,9 +3,8 @@ package com.hya.appstore.di.module;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.hya.appstore.MyApplication;
 import com.hya.appstore.common.http.CommonParamsInterceptor;
-import com.hya.appstore.common.rx.subscriber.RxErrorHandler;
+import com.hya.appstore.common.rx.RxErrorHandler;
 import com.hya.appstore.data.http.ApiService;
 
 import java.util.concurrent.TimeUnit;
@@ -36,7 +35,7 @@ public class HttpModule {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new CommonParamsInterceptor(gson,application))
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();
         return client;

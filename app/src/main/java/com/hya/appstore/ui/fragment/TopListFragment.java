@@ -10,20 +10,22 @@ import com.hya.appstore.ui.adapter.AppInfoAdapter;
  * Created by 洪裕安 on 2017/10/1.
  */
 
-public class GameFragment extends BaseAppInfoFragment {
+public class TopListFragment extends BaseAppInfoFragment  {
+
+
+
     @Override
     AppInfoAdapter adapterBuilder() {
-        return AppInfoAdapter.builder().showPosition(false).showBrief(true).showCategoryName(false).build();
+        return AppInfoAdapter.builder().showBrief(false).showCategoryName(true).showPosition(true).build();
     }
 
     @Override
     int getType() {
-        return Constant.GAME;
+        return Constant.TOPLIST;
     }
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-
         DaggerAppInfoComponent.builder().appComponent(appComponent).appInfoModule(new AppInfoModule(this)).build().inject(this);
     }
 }

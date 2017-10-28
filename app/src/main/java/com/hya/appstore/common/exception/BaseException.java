@@ -1,11 +1,12 @@
 package com.hya.appstore.common.exception;
 
 /**
- * Created by 洪裕安 on 2017/10/4.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
 
-public class BaseException extends Exception {
-
+public class BaseException extends Exception{
 
 
     /*API错误*/
@@ -54,20 +55,14 @@ public class BaseException extends Exception {
     public static final int ERROR_HTTP_500=500;
 
     private int code;
-    private String msg;
+    private String displayMessage;
 
     public BaseException() {
     }
 
-    public BaseException(int code, String msg) {
+    public BaseException(int code, String displayMessage) {
         this.code = code;
-        this.msg = msg;
-    }
-
-    public BaseException(String message, int code, String msg) {
-        super(message);
-        this.code = code;
-        this.msg = msg;
+        this.displayMessage = displayMessage;
     }
 
     public int getCode() {
@@ -78,11 +73,11 @@ public class BaseException extends Exception {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getDisplayMessage() {
+        return displayMessage;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setDisplayMessage(String displayMessage) {
+        this.displayMessage = displayMessage;
     }
 }

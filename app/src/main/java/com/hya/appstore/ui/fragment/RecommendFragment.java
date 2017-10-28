@@ -1,62 +1,87 @@
 package com.hya.appstore.ui.fragment;
 
-
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hya.appstore.R;
+import com.hya.appstore.bean.AppInfo;
 import com.hya.appstore.bean.IndexBean;
 import com.hya.appstore.di.component.AppComponent;
-import com.hya.appstore.di.component.DaggerRecommentComponent;
+import com.hya.appstore.di.component.DaggerRecommendComponent;
 import com.hya.appstore.di.module.RecommendModule;
-import com.hya.appstore.presenter.contract.AppInfoContract;
 import com.hya.appstore.presenter.RecommendPresenter;
-import com.hya.appstore.ui.adapter.IndexMultipleAdapter;
+import com.hya.appstore.presenter.contract.AppInfoContract;
+import com.hya.appstore.ui.activity.AppDetailActivity;
+import com.hya.appstore.ui.adapter.IndexMutilAdapter;
+
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
- * Created by 洪裕安 on 2017/10/1.
+ * @author hya
+ * @date 2017/10/24
  */
 
-public class RecommendFragment extends BaseFragment<RecommendPresenter> implements AppInfoContract.View {
+public class RecommendFragment extends ProgressFragment<RecommendPresenter> implements AppInfoContract.View{
 
 
-    Unbinder unbinder;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    private IndexMultipleAdapter mAdapter;
+    RecyclerView mRecyclerView;
 
 
-    private void initRecyclerView() {
-        //为RecyclerView设置布局管理器
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //动画
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-    }
+    private IndexMutilAdapter adapter;
 
 
     @Override
-    public void showError(String msg) {
-        Toast.makeText(getActivity(), "服务器出错", Toast.LENGTH_SHORT).show();
+    public void init() {
+        initRecyclerView();
+        mPresenter.requestDatas();
     }
+
+    @Override
+    public int setLayout() {
+        return R.layout.template_recyclerview;
+    }
+
+    @Override
+    public void setupActivityComponent(AppComponent component) {
+
+      DaggerRecommendComponent.builder().appComponent(component)
+                .recommendModule(new RecommendModule(this)).build().inject(this);
+
+    }
+
+
+    private void initRecyclerView(){
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+
+    }
+
+
+
+    @Override
+    public void emptyViewClick() {
+      mPresenter.requestDatas();
+    }
+
 
     @Override
     public void showResult(IndexBean indexBean) {
-        mAdapter = new IndexMultipleAdapter(getActivity());
-        mAdapter.setData(indexBean);
-
-        recyclerView.setAdapter(mAdapter);
+        adapter = new IndexMutilAdapter(getActivity());
+        adapter.setData(indexBean);
+        mRecyclerView.setAdapter(adapter);
 
     }
 
@@ -67,37 +92,6 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     @Override
     public void onRequestPermissionError() {
-        Toast.makeText(getActivity(), "你已拒绝授权", Toast.LENGTH_LONG).show();
-    }
-
-
-    @Override
-    public int setLayout() {
-        return R.layout.template_recycler_view;
-    }
-
-    @Override
-    public void setupActivityComponent(AppComponent appComponent) {
-        DaggerRecommentComponent.builder().appComponent(appComponent).recommendModule(new RecommendModule(this)).build().inject(this);
-    }
-
-    @Override
-    public void init() {
-        initRecyclerView();
-        mPresenter.requestDatas();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+        Toast.makeText(this.getActivity()  , "你已拒绝授权", Toast.LENGTH_SHORT).show();
     }
 }

@@ -53,4 +53,6 @@
     <string name="key_clear_cache">key_clear_cache</string>
     <string name="key_apk_download_dir">key_apk_download_dir</string>
     <string name="key_about_me">key_about_me</string>
+    <string name="remmenberPassword">记住密码</string>
+
 </resources>

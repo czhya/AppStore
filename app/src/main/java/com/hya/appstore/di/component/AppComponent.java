@@ -12,12 +12,18 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Created by 洪裕安 on 2017/10/2.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
 @Singleton
 @Component(modules = {AppModule.class, HttpModule.class})
 public interface AppComponent {
 
+    /**
+     * 获取ApiService
+     * @return ApiService
+     */
     public ApiService getApiService();
 
     public Application getApplication();

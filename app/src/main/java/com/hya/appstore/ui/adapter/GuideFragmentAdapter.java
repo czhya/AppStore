@@ -8,33 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 洪裕安 on 2017/10/3.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
 
 public class GuideFragmentAdapter extends FragmentPagerAdapter {
 
-    List<Fragment> fragments;
-
-    public void setFragments(List<Fragment> fragments) {
-        if (fragments==null){
-            fragments = new ArrayList<>();
-        }else {
-            this.fragments = fragments;
-        }
-    }
+    List<Fragment> mFragments;
 
     public GuideFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
+    public void setFragments(List<Fragment> fragments){
+        if (fragments!=null){
+            mFragments = fragments;
+        }else {
+            mFragments = new ArrayList<>();
+        }
+    }
+
+
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return mFragments.size();
     }
 }

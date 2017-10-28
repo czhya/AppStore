@@ -12,11 +12,14 @@ import java.net.SocketTimeoutException;
 
 import retrofit2.HttpException;
 
+
 /**
- * Created by 洪裕安 on 2017/10/5.
+ * Created by hya on 2017/10/24.
  */
 
 public class RxErrorHandler {
+
+
 
     private Context mContext;
 
@@ -37,17 +40,18 @@ public class RxErrorHandler {
         }else if (e instanceof HttpException){
             exception.setCode(BaseException.HTTP_ERROR);
         } else {
-
             exception.setCode(BaseException.UNKNOWN_ERROR);
-
         }
 
-        exception.setMsg(ErrorMessageFactory.create(mContext,exception.getCode()));
+        exception.setDisplayMessage(ErrorMessageFactory.create(mContext,exception.getCode()));
+
         return exception;
     }
 
-
     public void showErrorMessage(BaseException e){
-        Toast.makeText(mContext,e.getMsg() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, e.getDisplayMessage(), Toast.LENGTH_LONG).show();
     }
+
+
+
 }

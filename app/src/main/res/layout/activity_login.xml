@@ -9,27 +9,22 @@
     android:orientation="vertical"
     tools:context="com.hya.appstore.ui.activity.LoginActivity">
 
-
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
+        android:id="@+id/tool_Bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/AppTheme.ToolBar"
-
-        >
-
-
-    </android.support.v7.widget.Toolbar>
-
+        android:theme="@style/AppTheme.ToolBar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_w"
+
         android:orientation="vertical"
-        android:paddingBottom="50dp"
+        android:paddingBottom="20dp"
+
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="20dp">
@@ -39,63 +34,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <EditText
-                android:id="@+id/txt_mobi"
+                android:id="@+id/text_mobi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/mobi"
                 android:inputType="number" />
 
-
         </android.support.design.widget.TextInputLayout>
-
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/view_password_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <EditText
-                android:id="@+id/txt_password"
+                android:id="@+id/text_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
-
         </android.support.design.widget.TextInputLayout>
 
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="记住密码"/>
+            android:text="@string/remmenberPassword" />
+
+        <com.hya.appstore.ui.widget.LoadingButton
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_btn"
+            android:enabled="false"
+            app:loadingText="@string/logining"
+
+            app:progressColor="@color/colorAccent"
+            app:text="@string/login"
+            app:textColor="@color/color_w" />
+
     </LinearLayout>
 
-    <com.hya.appstore.ui.wight.LoadingButton
-        android:id="@+id/btn_login"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:text="@string/login"
-        android:background="@drawable/bg_btn"
-        android:enabled = "false"
-        app:loadingText="正在登录"
-        app:progressColor="@color/colorAccent"
-        app:textColor="@color/color_w" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:gravity="center"
         android:text="注册账号" />
 
 </LinearLayout>

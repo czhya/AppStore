@@ -8,49 +8,39 @@ import com.hya.appstore.bean.User;
 import com.hya.appstore.common.rx.RxHttpResponseCompat;
 import com.hya.appstore.common.rx.subscriber.ErrorHandlerSubscriber;
 import com.hya.appstore.common.util.ACache;
+import com.hya.appstore.common.util.VerificationUtils;
 import com.hya.appstore.presenter.contract.LoginContract;
 
 import javax.inject.Inject;
 
-import static android.content.ContentValues.TAG;
-
 /**
- * Created by 洪裕安 on 2017/10/7.
+ * Created by hya on 2017/10/26.
  */
 
-public class LoginPresenter extends BasePersenter<LoginContract.ILoginModel,LoginContract.ILoginView> {
+public class LoginPresenter extends BasePresenter<LoginContract.ILoginModel, LoginContract.ILoginView> {
 
 
+    private static final String TAG = "LoginPresenter";
     @Inject
     public LoginPresenter(LoginContract.ILoginModel iLoginModel, LoginContract.ILoginView iLoginView) {
         super(iLoginModel, iLoginView);
     }
 
-    public void login(String phone,String password){
-//        if (VerificationUtils.matcherPhoneNum(phone)){
-//            mView.checkPhoneError();
-//            return;
-//        }else {
-//            mView.checkPhoneSuccess();
-//        }
-//        if (VerificationUtils.matcherPassword(password)){
-//            mView.checkPasswordError();
-//            return;
-//        }
+    public void login(String phone, String password) {
+        if (!VerificationUtils.matcherPhoneNum(phone)) {
+            mView.checkPhoneError();
+            return;
+        } else {
+            mView.checkPhoneSuccess();
+        }
 
-        mModel.login(phone,password)
+        mModel.login(phone, password)
                 .compose(RxHttpResponseCompat.<LoginBean>compatResult())
                 .subscribe(new ErrorHandlerSubscriber<LoginBean>(mContext) {
+
                     @Override
                     public void onStart() {
-
                         mView.showLoading();
-                    }
-
-                    @Override
-                    public void onCompleted() {
-
-                        mView.dismissLoading();
                     }
 
                     @Override
@@ -60,27 +50,38 @@ public class LoginPresenter extends BasePersenter<LoginContract.ILoginModel,Logi
                     }
 
                     @Override
-                    public void onNext(Object o) {
-                        LoginBean loginBean = (LoginBean) o;
+                    public void onCompleted() {
+                        mView.dismissLoading();
+                    }
+
+                    @Override
+                    public void onNext(LoginBean loginBean) {
                         mView.loginSuccess(loginBean);
                         saveUser(loginBean);
                         RxBus.get().post(loginBean.getUser());
                     }
+
+
                 });
 
     }
 
-    private void saveUser(LoginBean bean){
+    private void saveUser(LoginBean bean) {
+
+        {
+            if (bean.getUser()!=null){
+                Log.e(TAG, "saveUser1: "+bean.getUser().getLogin_url()+ bean.getUser().getUserName()+bean.getUser().getEmail()+bean.getUser().getMobi()+bean.getUser().getId());
+            }
+
+            Log.e(TAG, "saveUser2: "+bean.getToken() );
+        }
+
+
+
         ACache aCache = ACache.get(mContext);
 
-
-        User user = bean.getUser();
-        String q = user.getUserName()+" "+user.getLogin_url()+" "+user.getEmail()+" "+user.getMobi();
-        System.out.println(q);
-
-
-        aCache.put("token",bean.getToken());
-        aCache.put("user",bean.getUser());
+        aCache.put("token", bean.getToken());
+        aCache.put("user", bean.getUser());
     }
 
 

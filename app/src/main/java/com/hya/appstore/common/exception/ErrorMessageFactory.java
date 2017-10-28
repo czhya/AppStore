@@ -5,7 +5,9 @@ import android.content.Context;
 import com.hya.appstore.R;
 
 /**
- * Created by 洪裕安 on 2017/10/4.
+ *
+ * @author 洪裕安
+ * @date 2017/10/4
  */
 
 public class ErrorMessageFactory {

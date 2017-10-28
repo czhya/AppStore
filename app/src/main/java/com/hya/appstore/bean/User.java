@@ -1,11 +1,10 @@
 package com.hya.appstore.bean;
 
 /**
- * Created by 洪裕安 on 2017/10/7.
+ * Created by hya on 2017/10/26.
  */
 
-public class User extends BaseBean {
-
+public class User extends BaseEntity{
     private Integer id;
     private String email;
     private String login_url;

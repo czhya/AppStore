@@ -1,29 +1,35 @@
 package com.hya.appstore.ui.fragment;
 
-import com.hya.appstore.common.Constant;
+import android.support.v4.app.Fragment;
+
+import com.hya.appstore.R;
 import com.hya.appstore.di.component.AppComponent;
 import com.hya.appstore.di.component.DaggerAppInfoComponent;
 import com.hya.appstore.di.module.AppInfoModule;
+import com.hya.appstore.presenter.AppInfoPresenter;
 import com.hya.appstore.ui.adapter.AppInfoAdapter;
 
 /**
- * Created by 洪裕安 on 2017/10/1.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
 
 public class GameFragment extends BaseAppInfoFragment {
     @Override
-    AppInfoAdapter adapterBuilder() {
-        return AppInfoAdapter.builder().showPosition(false).showBrief(true).showCategoryName(false).build();
+    AppInfoAdapter buildAdapter() {
+        return AppInfoAdapter.builder().layout(R.layout.template_appinfo)
+                .showPosition(false).showBrief(true).showCategoryName(true).build();
     }
 
     @Override
-    int getType() {
-        return Constant.GAME;
+    int type() {
+        return AppInfoPresenter.GAME;
     }
 
     @Override
-    public void setupActivityComponent(AppComponent appComponent) {
-
-        DaggerAppInfoComponent.builder().appComponent(appComponent).appInfoModule(new AppInfoModule(this)).build().inject(this);
+    public void setupActivityComponent(AppComponent component) {
+        DaggerAppInfoComponent.builder().appComponent(component)
+                .appInfoModule(new AppInfoModule(this)).build().injectGameFragment(this);
     }
 }

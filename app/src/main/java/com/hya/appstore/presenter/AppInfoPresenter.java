@@ -1,14 +1,12 @@
 package com.hya.appstore.presenter;
 
 import com.hya.appstore.bean.AppInfo;
-import com.hya.appstore.bean.BaseEntry;
+import com.hya.appstore.bean.BaseBean;
 import com.hya.appstore.bean.PageBean;
-import com.hya.appstore.common.Constant;
 import com.hya.appstore.common.rx.RxHttpResponseCompat;
 import com.hya.appstore.common.rx.subscriber.ErrorHandlerSubscriber;
 import com.hya.appstore.common.rx.subscriber.ProgressSubcriber;
 import com.hya.appstore.data.AppInfoModel;
-import com.hya.appstore.presenter.BasePersenter;
 import com.hya.appstore.presenter.contract.AppInfoContract;
 
 import javax.inject.Inject;
@@ -17,61 +15,95 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- * Created by 洪裕安 on 2017/10/7.
+ * Created by hya on 2017/10/26.
  */
 
-public class AppInfoPresenter extends BasePersenter<AppInfoModel,AppInfoContract.AppInfoView> {
+public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContract.AppInfoView> {
+
+
+    public static final int TOP_LIST = 1;
+    public static final int GAME = 2;
+    public static final int CATEGORY = 3;
+
+
+    public static final int FEATURED = 0;
+    public static final int TOPLIST = 1;
+    public static final int NEWLIST = 2;
+
 
     @Inject
     public AppInfoPresenter(AppInfoModel mModel, AppInfoContract.AppInfoView mView) {
         super(mModel, mView);
     }
 
-    public void getApps(int type,int page){
-        getObservable(type,page).compose(RxHttpResponseCompat.<PageBean<AppInfo>>compatResult()).subscribe(subscriber(page));
+    public void getApps(int type, int page) {
+        Observable observable = getObservable(type, page, 0, 0);
+        observable.compose(RxHttpResponseCompat.<PageBean<AppInfo>>compatResult())
+                .subscribe(subscriber(page));
     }
 
+    public void requestCategoryApps(int page, int categoryId, int flagType) {
+        getObservable(CATEGORY, page, flagType,categoryId).compose(RxHttpResponseCompat.<PageBean<AppInfo>>compatResult()).subscribe(subscriber(page));
+
+    }
+
+    private Observable<BaseBean<PageBean<AppInfo>>> getObservable(int type, int page, int flagType, int categoryId) {
+
+        switch (type) {
+
+            case TOP_LIST:
+                return mModel.topList(page);
 
 
+            case GAME:
+                return mModel.game(page);
 
-    private Subscriber subscriber(int page){
+            case CATEGORY:
+
+                if (flagType == FEATURED) {
+
+                    return mModel.getFeaturedAppsByCategory(categoryId, page);
+                } else if (flagType == TOPLIST) {
+
+                    return mModel.getTopListAppsByCategory(categoryId, page);
+                } else if (flagType == NEWLIST) {
+
+                    return mModel.getNewListAppsByCategory(categoryId, page);
+                }
+
+
+            default:
+                return Observable.empty();
+        }
+    }
+
+    private Subscriber subscriber(int page) {
         Subscriber subscriber = null;
-        if (page==0){
 
-            subscriber = new ProgressSubcriber<PageBean<AppInfo>>(mContext,mView) {
+        if (page == 0) {
+
+            subscriber = new ProgressSubcriber<PageBean<AppInfo>>(mContext, mView) {
                 @Override
-                public void onNext(Object o) {
-                    mView.showResult((PageBean<AppInfo>) o);
+                public void onNext(PageBean<AppInfo> appInfoPageBean) {
+                    mView.showResult(appInfoPageBean);
                 }
             };
-        }else {
+        } else {
+
             subscriber = new ErrorHandlerSubscriber<PageBean<AppInfo>>(mContext) {
+
                 @Override
                 public void onCompleted() {
-
                     mView.onLoadMoreComplete();
                 }
 
                 @Override
-                public void onNext(Object o) {
-                    mView.showResult((PageBean<AppInfo>) o);
+                public void onNext(PageBean<AppInfo> pageBean) {
+                    mView.showResult(pageBean);
                 }
             };
         }
 
         return subscriber;
     }
-
-    private Observable<BaseEntry<PageBean<AppInfo>>> getObservable(int type, int page){
-        switch (type){
-            case Constant.TOPLIST:
-               return mModel.topList(page);
-            case Constant.GAME:
-                return mModel.games(page);
-        }
-
-        return Observable.empty();
-    }
-
-
 }

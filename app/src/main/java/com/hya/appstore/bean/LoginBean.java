@@ -1,10 +1,10 @@
 package com.hya.appstore.bean;
 
 /**
- * Created by 洪裕安 on 2017/10/7.
+ * Created by hya on 2017/10/26.
  */
 
-public class LoginBean extends BaseBean {
+public class LoginBean extends BaseEntity{
 
     private String token;
     private User user;

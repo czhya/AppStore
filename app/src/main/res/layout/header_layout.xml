@@ -11,9 +11,10 @@
         android:id="@+id/img_user"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="10dp" />
-        <!--android:ico_color="#ffffff"-->
-        <!--android:ico_size="100dp" -->
+        android:layout_marginTop="10dp"
+        android:color="#ffffff"
+        />
+
 
 
     <TextView

@@ -7,14 +7,16 @@ import com.hya.appstore.data.http.ApiService;
 import com.hya.appstore.presenter.contract.AppInfoContract;
 import com.hya.appstore.ui.adapter.AppInfoAdapter;
 import com.hya.appstore.ui.fragment.RecommendFragment;
-import com.hya.appstore.ui.fragment.TopListFragment;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by 洪裕安 on 2017/10/7.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
+
 @Module
 public class AppInfoModule {
 
@@ -24,14 +26,16 @@ public class AppInfoModule {
         this.mView = mView;
     }
 
+
     @Provides
-    public AppInfoContract.AppInfoView provideView() {
+    public AppInfoContract.AppInfoView providerView(){
         return mView;
     }
 
     @Provides
-    public AppInfoModel provideModel(ApiService apiService) {
+    public AppInfoModel providerAppInfoModel(ApiService apiService){
         return new AppInfoModel(apiService);
     }
+
 
 }

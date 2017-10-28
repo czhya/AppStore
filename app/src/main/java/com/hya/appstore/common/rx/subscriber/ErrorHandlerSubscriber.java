@@ -4,48 +4,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.hya.appstore.common.Constant;
 import com.hya.appstore.common.exception.BaseException;
 import com.hya.appstore.common.rx.RxErrorHandler;
 import com.hya.appstore.ui.activity.LoginActivity;
 
-
 /**
- * Created by 洪裕安 on 2017/10/4.
+ * @author hya
+ * @date 2017/10/24
  */
 
-public abstract class ErrorHandlerSubscriber<T> extends BaseSubscriber {
+public abstract class ErrorHandlerSubscriber<T> extends BaseSubscriber<T> {
 
-    protected RxErrorHandler rxErrorHandler = null;
+    public RxErrorHandler rxErrorHandler;
 
     protected Context mContext;
 
     public ErrorHandlerSubscriber(Context context) {
         this.mContext = context;
-        rxErrorHandler = new RxErrorHandler(mContext);
+        this.rxErrorHandler = new RxErrorHandler(mContext);
     }
 
     @Override
     public void onError(Throwable e) {
         BaseException baseException = rxErrorHandler.handlerError(e);
 
-        System.out.println(baseException.getMsg()+baseException.getCode());
-
         if (baseException == null) {
             e.printStackTrace();
             Log.d("ErrorHandlerSubscriber", e.getMessage());
         } else {
-            rxErrorHandler.showErrorMessage(baseException);
-            if(baseException.getCode() == BaseException.ERROR_TOKEN){
+            if (baseException.getCode()==BaseException.ERROR_TOKEN){
                 toLogin();
             }
+            rxErrorHandler.showErrorMessage(baseException);
         }
     }
 
     private void toLogin() {
-
-        Intent intent = new Intent(mContext, LoginActivity.class);
-        mContext.startActivity(intent);
+        mContext.startActivity(new Intent(mContext, LoginActivity.class));
     }
-
-
 }

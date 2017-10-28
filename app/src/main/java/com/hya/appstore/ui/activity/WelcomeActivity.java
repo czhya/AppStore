@@ -7,10 +7,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.eftimoff.androipathview.PathView;
 import com.hya.appstore.R;
+import com.hya.appstore.common.Constant;
 import com.hya.appstore.common.util.ACache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -22,27 +24,32 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
-        pathView.getPathAnimator()
-                .delay(100)
-                .duration(3000)
+
+        pathView.getPathAnimator().delay(100)
+                .duration(5000)
                 .interpolator(new AccelerateDecelerateInterpolator())
                 .listenerEnd(new PathView.AnimatorBuilder.ListenerEnd() {
                     @Override
                     public void onAnimationEnd() {
                         jump();
+
                     }
                 })
-
                 .start();
+
     }
 
-    private void jump() {
+    void jump(){
+        String isShowGuide = ACache.get(this).getAsString(Constant.IS_SHOW_GUIDE);
 
-        if (ACache.get(this).getAsString(GuideActivity.IS_GUIDE).equals("")){
-            startActivity(new Intent(this,MainActivity.class));
-            this.finish();
+        if (null ==isShowGuide){
+            startActivity(new Intent(WelcomeActivity.this,GuideActivity.class));
+
         }else {
-            startActivity(new Intent(this,GuideActivity.class));
+            startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+
         }
+
+        this.finish();
     }
 }

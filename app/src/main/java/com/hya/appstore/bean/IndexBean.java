@@ -3,8 +3,11 @@ package com.hya.appstore.bean;
 import java.util.List;
 
 /**
- * Created by 洪裕安 on 2017/10/6.
+ *
+ * @author hya
+ * @date 2017/10/26
  */
+
 
 public class IndexBean {
 

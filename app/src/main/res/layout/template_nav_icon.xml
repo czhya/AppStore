@@ -21,8 +21,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@mipmap/icon_app"
+            />
 
-            android:src="@mipmap/icon_app" />
 
         <TextView
             style="@style/Text_Title"
@@ -46,8 +47,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@mipmap/icon_game"
+            />
 
-            android:src="@mipmap/icon_game" />
 
         <TextView
             style="@style/Text_Title"
@@ -70,8 +72,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:src="@mipmap/icon_top" />
+            android:src="@mipmap/icon_top"
+             />
 
         <TextView
             style="@style/Text_Title"

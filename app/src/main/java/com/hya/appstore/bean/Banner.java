@@ -1,8 +1,9 @@
 package com.hya.appstore.bean;
 
 /**
- * Created by 洪裕安 on 2017/10/6.
+ * Created by hya on 2017/10/26.
  */
+
 
 public class Banner {
 

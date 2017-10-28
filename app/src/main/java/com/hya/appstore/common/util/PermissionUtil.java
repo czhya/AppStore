@@ -8,6 +8,13 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import rx.Observable;
 import rx.Subscriber;
 
+/**
+ *
+ * @author hya
+ * @date 2017/10/26
+ */
+
+
 public class PermissionUtil {
 
 
@@ -15,9 +22,7 @@ public class PermissionUtil {
 
     public static void readPhonestate(Activity activity){
 
-
-
-        requestPermisson(activity, Manifest.permission.READ_PHONE_STATE).subscribe(new Subscriber<Boolean>() {
+        requestPermisson(activity,Manifest.permission.READ_PHONE_STATE).subscribe(new Subscriber<Boolean>() {
             @Override
             public void onCompleted() {
 
@@ -33,7 +38,6 @@ public class PermissionUtil {
 
             }
         });
-
     }
 
 
@@ -50,10 +54,11 @@ public class PermissionUtil {
 
         RxPermissions rxPermissions = new RxPermissions(activity);
 
-       return  rxPermissions.ensure(permission);
+        return  rxPermissions.ensure(permission);
 
     }
 
 
 
 }
+

@@ -1,6 +1,6 @@
 package com.hya.appstore.common.rx;
 
-import com.hya.appstore.bean.BaseEntry;
+import com.hya.appstore.bean.BaseBean;
 import com.hya.appstore.common.exception.ApiException;
 
 import rx.Observable;
@@ -10,25 +10,22 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by 洪裕安 on 2017/10/4.
+ * Created by hya on 2017/10/24.
  */
 
-public class RxHttpResponseCompat {
+public class RxHttpResponseCompat<T> {
 
-    public static <T> Observable.Transformer<BaseEntry<T>, T> compatResult() {
+    public static <T> Observable.Transformer<BaseBean<T>, T> compatResult() {
 
-        return new Observable.Transformer<BaseEntry<T>, T>() {
+        return new Observable.Transformer<BaseBean<T>, T>() {
             @Override
-            public Observable<T> call(Observable<BaseEntry<T>> baseBeanObservable) {
+            public Observable<T> call(Observable<BaseBean<T>> baseBeanObservable) {
 
-
-
-                return baseBeanObservable.flatMap(new Func1<BaseEntry<T>, Observable<T>>() {
+                return baseBeanObservable.flatMap(new Func1<BaseBean<T>, Observable<T>>() {
                     @Override
-                    public Observable<T> call(final BaseEntry<T> tBaseBean) {
+                    public Observable<T> call(final BaseBean<T> tBaseBean) {
 
-                        if(tBaseBean.isSuccess()){
-
+                        if (tBaseBean.success()) {
 
                             return Observable.create(new Observable.OnSubscribe<T>() {
                                 @Override
@@ -37,19 +34,15 @@ public class RxHttpResponseCompat {
                                     try {
                                         subscriber.onNext(tBaseBean.getData());
                                         subscriber.onCompleted();
-                                    }
-                                    catch (Exception e){
+                                    } catch (Exception e) {
                                         subscriber.onError(e);
                                     }
-
 
                                 }
                             });
 
-
-                        }
-                        else {
-                            return  Observable.error(new ApiException(tBaseBean.getStatus(),tBaseBean.getMessage()));
+                        } else {
+                            return Observable.error(new ApiException(tBaseBean.getStatus(), tBaseBean.getMessage()));
                         }
 
                     }

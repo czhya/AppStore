@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -24,16 +25,18 @@ import okhttp3.Response;
 import okio.Buffer;
 
 /**
- * Created by 洪裕安 on 2017/10/5.
+ *
+ * @author hya
+ * @date 2017/10/25
  */
 
 public class CommonParamsInterceptor implements Interceptor {
 
-    public static final MediaType JSON
+    private static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public Context mContext;
-    public Gson mGson;
+    private Context mContext;
+    private Gson mGson;
 
     public CommonParamsInterceptor(Gson mGson, Context mContext) {
         this.mGson = mGson;
@@ -65,7 +68,7 @@ public class CommonParamsInterceptor implements Interceptor {
             commonParamsMap.put(Constant.TOKEN,token==null?"":token);
 
 
-            if (method.equals("GET")) {
+            if ("GET".equals(method)) {
                 HttpUrl httpUrl = request.url();
 
                 HashMap<String, Object> rootMap = new HashMap<>();
@@ -75,7 +78,6 @@ public class CommonParamsInterceptor implements Interceptor {
                     if (Constant.PARAM.equals(key)) {
                         String oldParamsJson = httpUrl.queryParameter(Constant.PARAM);
                         if (oldParamsJson != null) {
-//                        rootMap = mGson.fromJson(oldParamsJson, HashMap.class);
 
                             HashMap<String, Object> p = mGson.fromJson(oldParamsJson, HashMap.class); // 原始参数
 
@@ -105,7 +107,7 @@ public class CommonParamsInterceptor implements Interceptor {
 
                 request = request.newBuilder().url(url).build();
 
-            } else if (method.equals("POST")) {
+            } else if ("POST".equals(method)) {
                 RequestBody requestBody = request.body();
 
                 HashMap<String, Object> rootMap = new HashMap<>();

@@ -11,8 +11,11 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by 洪裕安 on 2017/10/3.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
+
 @Module
 public class RecommendModule {
 
@@ -22,18 +25,22 @@ public class RecommendModule {
         this.mView = mView;
     }
 
+
     @Provides
-    public AppInfoContract.View provideView(){
+    public AppInfoContract.View providerView(){
         return mView;
     }
 
     @Provides
-    public AppInfoModel provideModel(ApiService apiService){
+    public AppInfoModel providerRecommendModel(ApiService apiService){
         return new AppInfoModel(apiService);
     }
 
     @Provides
-    public ProgressDialog provideProgressDialog(AppInfoContract.View view){
+    public ProgressDialog providerProgressDialog(AppInfoContract.View view){
         return new ProgressDialog(((RecommendFragment)view).getActivity());
     }
+
+
+
 }

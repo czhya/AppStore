@@ -25,7 +25,9 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- * Created by 洪裕安 on 2017/10/5.
+ *
+ * @author 洪裕安
+ * @date 2017/10/5
  */
 
 public class DeviceUtils {

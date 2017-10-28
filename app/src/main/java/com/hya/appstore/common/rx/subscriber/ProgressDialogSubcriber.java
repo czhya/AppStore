@@ -1,15 +1,18 @@
 package com.hya.appstore.common.rx.subscriber;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.hya.appstore.common.util.ProgressDialogHandler;
 
 /**
- * Created by 洪裕安 on 2017/10/5.
+ *
+ * @author hya
+ * @date 2017/10/25
  */
 
-public abstract class ProgressDialogSubcriber<T> extends ErrorHandlerSubscriber<T> implements ProgressDialogHandler.OnProgressCancelListener{
+public  abstract  class ProgressDialogSubcriber<T> extends ErrorHandlerSubscriber<T>  implements ProgressDialogHandler.OnProgressCancelListener {
+
+
 
     private ProgressDialogHandler mProgressDialogHandler;
 
@@ -17,7 +20,7 @@ public abstract class ProgressDialogSubcriber<T> extends ErrorHandlerSubscriber<
     public ProgressDialogSubcriber(Context context) {
         super(context);
 
-        mProgressDialogHandler = new ProgressDialogHandler(this,true,mContext);
+        mProgressDialogHandler = new ProgressDialogHandler(mContext,true,this);
     }
 
     protected boolean isShowProgressDialog(){
@@ -57,4 +60,5 @@ public abstract class ProgressDialogSubcriber<T> extends ErrorHandlerSubscriber<
         }
 
     }
+
 }

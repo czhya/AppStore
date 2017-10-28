@@ -1,12 +1,14 @@
 package com.hya.appstore.ui;
 
 /**
- * Created by 洪裕安 on 2017/10/2.
+ *
+ * @author hya
+ * @date 2017/10/24
  */
 
 public interface BaseView {
-
     void showLoading();
+    void showError(String message);
     void dismissLoading();
-    void  showError(String msg);
+
 }

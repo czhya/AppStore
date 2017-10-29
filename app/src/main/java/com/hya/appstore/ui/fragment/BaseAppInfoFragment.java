@@ -16,7 +16,10 @@ import com.hya.appstore.presenter.contract.AppInfoContract;
 import com.hya.appstore.ui.activity.AppDetailActivity;
 import com.hya.appstore.ui.adapter.AppInfoAdapter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import zlc.season.rxdownload2.RxDownload;
 
 /**
  *
@@ -27,6 +30,9 @@ import butterknife.BindView;
 public abstract class BaseAppInfoFragment extends ProgressFragment<AppInfoPresenter> implements AppInfoContract.AppInfoView, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @Inject
+    RxDownload mRxDownload;
 
     int page = 0;
 

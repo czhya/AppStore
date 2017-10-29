@@ -6,6 +6,8 @@ import com.hya.appstore.common.exception.BaseException;
 import com.hya.appstore.common.util.ProgressDialogHandler;
 import com.hya.appstore.ui.BaseView;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  *
  * @author hya
@@ -15,6 +17,7 @@ import com.hya.appstore.ui.BaseView;
 public  abstract  class ProgressSubcriber<T> extends ErrorHandlerSubscriber<T>  implements ProgressDialogHandler.OnProgressCancelListener {
 
     private BaseView mBaseView;
+    private  Disposable mDisposable;
 
 
     public ProgressSubcriber(Context context, BaseView baseView) {
@@ -29,20 +32,22 @@ public  abstract  class ProgressSubcriber<T> extends ErrorHandlerSubscriber<T>  
 
     @Override
     public void onCancelProgress() {
-        unsubscribe();
+        mDisposable.dispose();
     }
 
+
     @Override
-    public void onStart() {
+    public void onSubscribe(Disposable d) {
+        mDisposable = d;
 
         if(isShowProgressDialog()){
-           mBaseView.showLoading();
+            mBaseView.showLoading();
         }
 
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         if(isShowProgressDialog()){
             mBaseView.dismissLoading();
         }

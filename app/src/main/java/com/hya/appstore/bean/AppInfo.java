@@ -88,6 +88,17 @@ public class AppInfo implements Serializable{
     private List<AppInfo> sameDevAppInfoList;
     private String categoryId;
 
+
+    private AppDownloadInfo appDownloadInfo;
+
+    public AppDownloadInfo getAppDownloadInfo() {
+        return appDownloadInfo;
+    }
+
+    public void setAppDownloadInfo(AppDownloadInfo mAppDownloadInfo) {
+        this.appDownloadInfo = mAppDownloadInfo;
+    }
+
     public int getAddTime() {
         return addTime;
     }

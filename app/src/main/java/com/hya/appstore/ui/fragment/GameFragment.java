@@ -19,7 +19,8 @@ public class GameFragment extends BaseAppInfoFragment {
     @Override
     AppInfoAdapter buildAdapter() {
         return AppInfoAdapter.builder().layout(R.layout.template_appinfo)
-                .showPosition(false).showBrief(true).showCategoryName(true).build();
+                .showPosition(false).showBrief(true).showCategoryName(true).rxDownload(mRxDownload)
+                .build();
     }
 
     @Override

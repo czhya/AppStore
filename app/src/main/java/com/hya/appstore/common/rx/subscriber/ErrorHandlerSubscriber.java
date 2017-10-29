@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.hya.appstore.common.Constant;
 import com.hya.appstore.common.exception.BaseException;
 import com.hya.appstore.common.rx.RxErrorHandler;
 import com.hya.appstore.ui.activity.LoginActivity;

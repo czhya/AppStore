@@ -6,7 +6,8 @@ import com.hya.appstore.bean.IndexBean;
 import com.hya.appstore.bean.PageBean;
 import com.hya.appstore.data.http.ApiService;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  *

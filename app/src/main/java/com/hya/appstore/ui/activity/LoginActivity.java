@@ -16,15 +16,17 @@ import com.hya.appstore.di.module.LoginModule;
 import com.hya.appstore.presenter.LoginPresenter;
 import com.hya.appstore.presenter.contract.LoginContract;
 import com.hya.appstore.ui.widget.LoadingButton;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.InitialValueObservable;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func2;
+import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * @author hya
@@ -86,32 +88,30 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         //RxBinding2中没有了这种转化方式
-        Observable<CharSequence> onMobi = RxTextView.textChanges(mTextMobi);
-        Observable<CharSequence> onPassword = RxTextView.textChanges(mTextPassword);
+         InitialValueObservable<CharSequence> onMobi = RxTextView.textChanges(mTextMobi);
+         InitialValueObservable<CharSequence> onPassword = RxTextView.textChanges(mTextPassword);
 
-
-        Observable.combineLatest(onMobi, onPassword, new Func2<CharSequence, CharSequence, Boolean>() {
+        Observable.combineLatest(onMobi, onPassword, new BiFunction<CharSequence, CharSequence, Boolean>() {
             @Override
-            public Boolean call(CharSequence onMobi, CharSequence onPassword) {
+            public Boolean apply(CharSequence onMobi, CharSequence onPassword) throws Exception {
                 if (onMobi.length() == 11 && onPassword.length() >= 6) {
                     return true;
                 } else {
                     return false;
                 }
             }
-        }).subscribe(new Action1<Boolean>() {
+        }).subscribe(new Consumer<Boolean>() {
             @Override
-            public void call(Boolean aBoolean) {
-                RxView.enabled(btnLogin).call(aBoolean);
+            public void accept(Boolean aBoolean) throws Exception {
+                RxView.enabled(btnLogin).accept(aBoolean);
             }
         });
+        
 
+        RxView.clicks(btnLogin).subscribe(new Consumer<Object>() {
 
-        RxView.clicks(btnLogin).subscribe(new Action1<Void>() {
             @Override
-            public void call(Void aVoid) {
-
-
+            public void accept(Object o) throws Exception {
                 /**
                  * remenber passowrd
                  */
@@ -131,6 +131,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                  * login
                  */
                 mPresenter.login(mTextMobi.getText().toString().trim(), mTextPassword.getText().toString().trim());
+
             }
         });
     }

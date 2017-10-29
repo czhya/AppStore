@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.hya.appstore.common.util.ProgressDialogHandler;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  *
  * @author hya
@@ -15,6 +17,7 @@ public  abstract  class ProgressDialogSubcriber<T> extends ErrorHandlerSubscribe
 
 
     private ProgressDialogHandler mProgressDialogHandler;
+    private Disposable mDisposable;
 
 
     public ProgressDialogSubcriber(Context context) {
@@ -29,20 +32,20 @@ public  abstract  class ProgressDialogSubcriber<T> extends ErrorHandlerSubscribe
 
     @Override
     public void onCancelProgress() {
-        unsubscribe();
+        mDisposable.dispose();
     }
 
     @Override
-    public void onStart() {
-
+    public void onSubscribe(Disposable d) {
+        mDisposable = d;
         if(isShowProgressDialog()){
             this.mProgressDialogHandler.showProgressDialog();
         }
-
     }
 
+
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
 
 

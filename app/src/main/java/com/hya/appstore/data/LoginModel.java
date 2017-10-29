@@ -6,10 +6,13 @@ import com.hya.appstore.bean.requestBean.LoginRequestBean;
 import com.hya.appstore.data.http.ApiService;
 import com.hya.appstore.presenter.contract.LoginContract;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
- * Created by hya on 2017/10/26.
+ *
+ * @author hya
+ * @date 2017/10/26
  */
 
 public class LoginModel implements LoginContract.ILoginModel {

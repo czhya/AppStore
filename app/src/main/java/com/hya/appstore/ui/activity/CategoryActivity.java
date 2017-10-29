@@ -11,8 +11,6 @@ import com.hya.appstore.R;
 import com.hya.appstore.bean.Category;
 import com.hya.appstore.common.Constant;
 import com.hya.appstore.di.component.AppComponent;
-import com.hya.appstore.di.component.DaggerCategoryComponent;
-import com.hya.appstore.di.module.CategoryModule;
 import com.hya.appstore.ui.adapter.CategoryAppAdapter;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;

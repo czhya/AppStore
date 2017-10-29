@@ -10,6 +10,10 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hya.appstore.common.imageloader.ImageLoader;
+import com.hya.appstore.ui.widget.DownloadButtonConntroller;
+import com.hya.appstore.ui.widget.DownloadProgressButton;
+
+import zlc.season.rxdownload2.RxDownload;
 
 
 /**
@@ -22,11 +26,13 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfo, BaseViewHolder> {
 
 
     private Builder mBuilder;
+    private DownloadButtonConntroller mDownloadButtonConntroller;
 
     private AppInfoAdapter(Builder builder) {
         super(builder.layoutId);
 
         this.mBuilder = builder;
+        mDownloadButtonConntroller = new DownloadButtonConntroller(builder.rxDownload);
 
         openLoadAnimation();
     }
@@ -68,6 +74,24 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfo, BaseViewHolder> {
             txtViewBrief.setVisibility(mBuilder.isShowBrief ? View.VISIBLE : View.GONE);
             txtViewBrief.setText(item.getBriefShow());
         }
+
+        TextView textViewSize = helper.getView(R.id.txt_apk_size);
+
+        if(textViewSize !=null){
+            textViewSize.setText((item.getApkSize() / 1014 / 1024) +"Mb");
+        }
+
+
+
+        helper.addOnClickListener(R.id.btn_download);
+
+        View viewBtn  = helper.getView(R.id.btn_download);
+
+        if (viewBtn instanceof  DownloadProgressButton){
+
+            DownloadProgressButton btn = (DownloadProgressButton) viewBtn;
+            mDownloadButtonConntroller.handClick(btn,item);
+        }
     }
 
     public static class Builder {
@@ -76,6 +100,7 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfo, BaseViewHolder> {
         private boolean isShowCategoryName;
         private boolean isShowBrief;
 
+        private RxDownload rxDownload;
         private int layoutId = R.layout.template_appinfo;
 
 
@@ -96,6 +121,11 @@ public class AppInfoAdapter extends BaseQuickAdapter<AppInfo, BaseViewHolder> {
         public Builder showBrief(boolean b) {
 
             this.isShowBrief = b;
+            return this;
+        }
+
+        public Builder rxDownload(RxDownload rxDownload){
+            this.rxDownload = rxDownload;
             return this;
         }
 

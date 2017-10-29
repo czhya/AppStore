@@ -18,13 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.hwangjr.rxbus.RxBus;
-import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hya.appstore.R;
 import com.hya.appstore.bean.User;
 import com.hya.appstore.common.Constant;
 import com.hya.appstore.common.font.Cniao5Font;
 import com.hya.appstore.common.imageloader.GlideCircleTransform;
+import com.hya.appstore.common.rx.RxBus;
 import com.hya.appstore.common.util.ACache;
 import com.hya.appstore.common.util.PermissionUtil;
 import com.hya.appstore.di.component.AppComponent;
@@ -33,7 +32,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author hya
@@ -62,16 +61,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.get().unregister(this);
+//        RxBus.get().unregister(this);
     }
 
-    @Subscribe
-    public void getUser(User user) {
-
-        initUserHeadView(user);
-
-
-    }
 
     private void initUserHeadView(User user) {
         if (user==null){
@@ -90,12 +82,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
-        RxBus.get().register(this);
+        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+            @Override
+            public void accept(User user) throws Exception {
+                initUserHeadView(user);
+            }
+        });
 
         PermissionUtil.requestPermisson(this, Manifest.permission.READ_PHONE_STATE)
-                .subscribe(new Action1<Boolean>() {
+                .subscribe(new Consumer<Boolean>() {
+
+
                     @Override
-                    public void call(Boolean aBoolean) {
+                    public void accept(Boolean aBoolean) throws Exception {
 
                         if (aBoolean) {
                             initDrawerLayout();
@@ -107,6 +106,7 @@ public class MainActivity extends BaseActivity {
                             //------
                         }
                     }
+
                 });
     }
 

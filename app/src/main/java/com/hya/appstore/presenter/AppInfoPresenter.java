@@ -9,13 +9,18 @@ import com.hya.appstore.common.rx.subscriber.ProgressSubcriber;
 import com.hya.appstore.data.AppInfoModel;
 import com.hya.appstore.presenter.contract.AppInfoContract;
 
+
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 
 /**
- * Created by hya on 2017/10/26.
+ *
+ * @author hya
+ * @date 2017/10/26
  */
 
 public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContract.AppInfoView> {
@@ -77,8 +82,8 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
         }
     }
 
-    private Subscriber subscriber(int page) {
-        Subscriber subscriber = null;
+    private Observer subscriber(int page) {
+        Observer subscriber = null;
 
         if (page == 0) {
 
@@ -93,8 +98,13 @@ public class AppInfoPresenter extends BasePresenter<AppInfoModel, AppInfoContrac
             subscriber = new ErrorHandlerSubscriber<PageBean<AppInfo>>(mContext) {
 
                 @Override
-                public void onCompleted() {
+                public void onComplete() {
                     mView.onLoadMoreComplete();
+                }
+
+                @Override
+                public void onSubscribe(Disposable d) {
+
                 }
 
                 @Override

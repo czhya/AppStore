@@ -4,7 +4,8 @@ import com.hya.appstore.bean.BaseBean;
 import com.hya.appstore.bean.LoginBean;
 import com.hya.appstore.ui.BaseView;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by hya on 2017/10/26.

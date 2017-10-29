@@ -25,7 +25,7 @@ public class TopListFragment extends BaseAppInfoFragment{
     @Override
     AppInfoAdapter buildAdapter() {
         return AppInfoAdapter.builder().layout(R.layout.template_appinfo)
-                .showPosition(true).showBrief(false).showCategoryName(true).build();
+                .showPosition(true).showBrief(false).showCategoryName(true).rxDownload(mRxDownload).build();
     }
 
     @Override

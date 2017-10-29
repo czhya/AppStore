@@ -7,10 +7,13 @@ import com.hya.appstore.presenter.contract.CategoryContract;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
- * Created by hya on 2017/10/27.
+ *
+ * @author hya
+ * @date 2017/10/27
  */
 
 public class CategoryModel implements CategoryContract.ICategoryModel {
